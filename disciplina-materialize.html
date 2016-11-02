@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="disciplina">
+  <head>
+    <meta charset="utf-8">
+    <title>sDuc</title>
+    <link rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/estilo.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body ng-controller="controllerIndex">
+    <div class="container">
+      <h3>{{title}}</h3>
+
+      <div class="ui-alert">
+        <!-- <div class="ui-alert-title">
+          Ops!, houve um problema.
+        </div> -->
+        <div class="ui-alert-message">
+          {{error}}
+        </div>
+      </div>
+
+       <div class="row">
+        <input type="text" ng-model="busca" placeholder="o que está buscando" class="form-control">
+        <table class="table" ng-show="disciplinas.length > 0" >
+          <thead>
+            <tr>
+              <td></td>
+              <td> Código </td>
+              <td> Disciplina </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-dblclick="deletarDisciplina(disciplina)" ng-class="{selecionado: disciplina.selecionado}" 
+            ng-repeat="disciplina in disciplinas | filter:{disciplina:busca} ">
+              <td>
+                <input type="checkbox" ng-model="disciplina.selecionado"/>                
+              </td>
+              <td> {{disciplina.pkdisciplina}} </td>
+              <td> {{disciplina.disciplina}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+      <form name="formDisciplina">
+          <div class="input-field col s12">
+              <label for="disciplina">Disciplina</label>
+              <input id="disciplina" type="text" class="form-control" name="disciplina" ng-model="disciplina.disciplina" ng-required="true" >
+          </div>
+          
+          <div  ng-show="formDisciplina.disciplina.$invalid && formDisciplina.disciplina.$dirty" class="alert alert-danger">
+              Preencha a Disciplina!
+          </div>
+      </form>
+      <br>
+      <div class="row">
+        <div class="col s2">
+          <button type="button" ng-click="adicionarDisciplina(disciplina)" ng-disabled="formDisciplina.$invalid" class="btn btn-primary btn-block">Salvar</button>
+        </div>
+        <div class="col s2">
+          <button type="button" ng-click="apagarDisciplinas(disciplinas)"  ng-disabled="!isDisciplinaSelecionada" class="btn btn-danger btn-block">Apagar</button>
+        </div>
+      </div>
+
+     
+
+    </div>
+    
+    <script src="lib/angular/angular.js" charset="utf-8"></script>
+    <script src="lib/jquery/dist/jquery.js" charset="utf-8"></script>
+    <script src="lib/materialize/js/materialize.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+    <script src="js/controller/disciplinaController.js" charset="utf-8"></script>
+  </body>
+</html>
